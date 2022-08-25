@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FriendIndexController;
+use App\Http\Controllers\FriendStoreController;
+use App\Http\Controllers\ProfileIndexController;
+use App\Http\Controllers\FriendDestroyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +20,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+Route::get('/friends',FriendIndexController::class)->name('friends');
+
+Route::post('/friends/{user}',FriendStoreController::class)->name('friends.store');
+
+Route::delete('/friends/{user}',FriendDestroyController::class)->name('friends.destroy');
+
+Route::get('profile/{user}',ProfileIndexController::class)->name('profile');
+
+require __DIR__.'/auth.php';
